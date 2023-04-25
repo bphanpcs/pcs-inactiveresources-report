@@ -87,4 +87,27 @@ pdf.cell(30, 10, "Owner", 1)
 pdf.cell(0, 10, "", 0, 1)
 
 pdf.set_font("Arial", "", 12)
-for inactive_resource in inactive_resources
+for inactive_resource in inactive_resources:
+pdf.cell(30, 10, inactive_resource["Account Name"], 1)
+pdf.cell(30, 10, inactive_resource["Account ID"], 1)
+pdf.cell(30, 10, inactive_resource["Cloud Provider"], 1)
+pdf.cell(30, 10, inactive_resource["Region"], 1)
+pdf.cell(50, 10, inactive_resource["Resource Name"], 1)
+pdf.cell(30, 10, inactive_resource["Resource ID"], 1)
+pdf.cell(30, 10, inactive_resource["Resource Type"], 1)
+pdf.cell(30, 10, inactive_resource["Last Seen"], 1)
+pdf.cell(30, 10, inactive_resource["State"], 1)
+if "Owner" in inactive_resource:
+pdf.cell(30, 10, inactive_resource["Owner"], 1)
+else:
+pdf.cell(30, 10, "", 1)
+pdf.cell(0, 10, "", 0, 1)
+Save PDF report
+pdf_title = "Inactive Cloud Resources Report.pdf"
+pdf.output(pdf_title, "F")
+Print confirmation message
+print("Inactive Cloud Resources Report generated as " + pdf_title)
+
+This script logs into Prisma Cloud using the provided username (access key) and password (secret key), retrieves a list of inactive resources across all supported cloud providers, generates a PDF report with a title that explains the purpose of the report, and saves the report to a file.
+
+Note that you will need to install the `requests`, `tabulate`, and `fpdf` libraries for this script to work. You can do so by running `pip install requests`, `pip install tabulate`, and `pip install fpdf` in your terminal.
