@@ -3,15 +3,24 @@ import json
 from tabulate import tabulate
 from fpdf import FPDF
 
-# Set Prisma Cloud API details
-access_key = 'YOUR_ACCESS_KEY'
-secret_key = 'YOUR_SECRET_KEY'
-api_base_url = 'https://api.prismacloud.io'
+# Set Prisma Cloud login details
+username = 'YOUR_ACCESS_KEY'
+password = 'YOUR_SECRET_KEY'
+login_url = 'https://api.prismacloud.io/login'
 
-# Set headers
+# Authenticate and generate bearer authorization token
+auth_payload = {
+    'username': username,
+    'password': password
+}
+auth_response = requests.post(login_url, json=auth_payload)
+auth_data = json.loads(auth_response.content)
+bearer_token = auth_data['token']
+
+# Set headers with bearer authorization token
 headers = {
     'Content-Type': 'application/json',
-    'x-redlock-auth': access_key+":"+secret_key
+    'Authorization': 'Bearer ' + bearer_token
 }
 
 # Set payload
